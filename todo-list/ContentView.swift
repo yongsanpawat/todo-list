@@ -13,6 +13,8 @@ struct ContentView: View {
         Todo(title: "Meeting with Tom", isDone: false),
         Todo(title: "Math examination", isDone: false)
     ]
+    @State private var showCreateForm: Bool = false
+    @State private var todoTitle: String = ""
     
     var body: some View {
         VStack {
@@ -28,7 +30,7 @@ struct ContentView: View {
                     Spacer()
                     
                     Button(action: {
-                        
+                        todo.isDone.toggle()
                     }, label: {
                         Image(systemName: todo.isDone ? "checkmark.circle.fill" : "checkmark.circle")
                             .resizable()
@@ -38,8 +40,27 @@ struct ContentView: View {
                 .padding()
                 .background(Color.black.opacity(0.08))
             }
+            
+            Spacer()
+            
+            Button("New Todo") {
+                showCreateForm = true
+            }
         }
         .padding()
+        .sheet(isPresented: $showCreateForm, content: {
+            VStack {
+                TextField("Title", text: $todoTitle)
+                    .textFieldStyle(.roundedBorder)
+                
+                Button("Create") {
+                    todoList.append(Todo(title: todoTitle, isDone: false))
+                    showCreateForm = false
+                    todoTitle = ""
+                }
+            }
+            .padding()
+        })
     }
 }
 
