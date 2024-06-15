@@ -38,7 +38,7 @@ struct ContentView: View {
                     })
                 }
                 .padding()
-                .background(Color.black.opacity(0.08))
+                .background(Color.blue.opacity(0.05))
             }
             
             Spacer()
